@@ -13,7 +13,7 @@ namespace BJL.SurveyMaker.BL.Test
         public void LoadTest()
         {
             QuestionList questions = new QuestionList();
-            questions.Load();
+            questions.LoadQuestions();
 
             int expected = 6;
             int actual = questions.Count;
@@ -28,7 +28,7 @@ namespace BJL.SurveyMaker.BL.Test
 
             question.Text = "TestQuestion";
 
-            int rowsInserted = question.Insert();
+            int rowsInserted = question.InsertQuestion();
 
             Assert.IsTrue(rowsInserted > 0);
         }
@@ -39,17 +39,17 @@ namespace BJL.SurveyMaker.BL.Test
 
             //Load all questions and then get the question
             QuestionList questions = new QuestionList();
-            questions.Load();
+            questions.LoadQuestions();
             Question question = questions.FirstOrDefault(q => q.Text == "TestQuestion");
 
             //Change the properties
             question.Text = "ChangedText";
 
             //Update the question
-            question.Update();
+            question.UpdateQuestion();
 
             //Load it
-            question.LoadById();
+            question.LoadQuestionById();
 
             Assert.AreEqual(question.Text, "ChangedText");
 
@@ -61,10 +61,10 @@ namespace BJL.SurveyMaker.BL.Test
 
             //Load all questions and then get the question
             QuestionList questions = new QuestionList();
-            questions.Load();
+            questions.LoadQuestions();
             Question question = questions.FirstOrDefault(q => q.Text == "ChangedText");
 
-            int actual = question.Delete();
+            int actual = question.DeleteQuestion();
 
             Assert.IsTrue(actual > 0);
         }

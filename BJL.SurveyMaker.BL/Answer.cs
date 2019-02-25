@@ -11,6 +11,7 @@ namespace BJL.SurveyMaker.BL
     {
         public Guid Id { get; set; }
         public string Text { get; set; }
+        public bool IsCorrect { get; set; }
 
         public int Insert()
         {

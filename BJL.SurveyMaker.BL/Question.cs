@@ -11,8 +11,9 @@ namespace BJL.SurveyMaker.BL
     {
         public Guid Id { get; set; }
         public string Text { get; set; }
+        public AnswerList Answers { get; set; }
 
-        public int Insert()
+        public int InsertQuestion()
         {
             int result = 0;
             try
@@ -39,7 +40,7 @@ namespace BJL.SurveyMaker.BL
             }
         }
 
-        public int Update()
+        public int UpdateQuestion()
         {
             try
             {
@@ -74,7 +75,7 @@ namespace BJL.SurveyMaker.BL
             }
         }
 
-        public int Delete()
+        public int DeleteQuestion()
         {
             try
             {
@@ -109,7 +110,7 @@ namespace BJL.SurveyMaker.BL
             }
         }
 
-        public void LoadById()
+        public void LoadQuestionById()
         {
             try
             {
@@ -142,11 +143,12 @@ namespace BJL.SurveyMaker.BL
                 throw ex;
             }
         }
+
     }
 
     public class QuestionList : List<Question>
     {
-        public void Load()
+        public void LoadQuestions()
         {
             try
             {
