@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BJL.SurveyMaker.PL;
 
-namespace BJL.SurveyAnswerr.BL
+namespace BJL.SurveyMaker.BL
 {
     public class Answer
     {
@@ -118,7 +118,7 @@ namespace BJL.SurveyAnswerr.BL
                     //If the Id is set, get the result in the table where it matches
                     if (this.Id != Guid.Empty)
                     {
-                        tblAnswer answer = dc.tblAnswers.FirstOrDefault(m => m.Id == this.Id);
+                        tblAnswer answer = dc.tblAnswers.FirstOrDefault(a => a.Id == this.Id);
 
                         //If a row was retrieved, change 
                         if (answer != null)
