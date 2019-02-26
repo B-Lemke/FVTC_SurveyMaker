@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BJL.SurveyMaker.WPFUI"
         mc:Ignorable="d"
-        Title="Survey Maker" Height="408.981" Width="917.024">
+        Title="Survey Maker" Height="408.981" Width="917.024" Activated="SurveyMakerActivated">
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -31,7 +31,7 @@
         <Button Content="Manage Questions" HorizontalAlignment="Left" Height="46" VerticalAlignment="Top" Width="153" Margin="734,51,0,0" Click="BtnManageQuestions_Click"/>
         <Button Content="Manage Answers" HorizontalAlignment="Left" Height="46" VerticalAlignment="Top" Width="153" Margin="734,111,0,0" Click="BtnManageAnswers_Click"/>
         <DockPanel HorizontalAlignment="Right" Height="31" LastChildFill="False" Margin="0,347,0,0" VerticalAlignment="Top" Width="909" Background="#FFE4E4E4">
-            <Label x:Name="lblStatus" Content="" Height="31" VerticalAlignment="Top"/>
+            <Label x:Name="lblStatus" Content="" Height="31" VerticalAlignment="Top"  Margin="10,0,0,0"/>
         </DockPanel>
     </Grid>
 </Window>

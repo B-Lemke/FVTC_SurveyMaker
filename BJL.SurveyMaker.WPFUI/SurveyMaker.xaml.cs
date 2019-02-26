@@ -96,6 +96,12 @@ namespace BJL.SurveyMaker.WPFUI
                 Question question = new Question();
                 question = questions.ElementAt(cboQuestion.SelectedIndex);
 
+                //Clear out all selections
+                cboCorrectAnswer.SelectedItem = null;
+                cboWrongAnswer1.SelectedItem = null;
+                cboWrongAnswer2.SelectedItem = null;
+                cboWrongAnswer3.SelectedItem = null;
+
                 int wrongAnswersInserted = 0;
 
                 //Loop through each answer and select it in a combo box
@@ -125,6 +131,19 @@ namespace BJL.SurveyMaker.WPFUI
                         wrongAnswersInserted++;
                     }
                 }
+
+            }
+            catch (Exception ex)
+            {
+                lblStatus.Content = ex.Message;
+            }
+        }
+
+        private void SurveyMakerActivated(object sender, EventArgs e)
+        {
+            try
+            {
+                LoadComboBoxes();
             }
             catch (Exception ex)
             {
