@@ -1,12 +1,24 @@
-﻿<Window x:Class="BJL.SurveyMaker.WPFUI.AddQuestionOrAnswer"
+﻿<Window x:Class="BJL.SurveyMaker.WPFUI.ManageQAs"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BJL.SurveyMaker.WPFUI"
         mc:Ignorable="d"
-        Title="AddQuestionOrAnswer" Height="450" Width="800">
+        Title="AddQuestionOrAnswer" Height="196.649" Width="715.895">
     <Grid>
-        
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFF3A05A" Offset="0"/>
+                <GradientStop Color="#FFFFB77B" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <ComboBox x:Name="cboQorAs" HorizontalAlignment="Left" VerticalAlignment="Top" Width="584" Margin="99,35,0,0" SelectionChanged="cboQorAChanged"/>
+        <Label x:Name="lblQOrA" Content="Label" HorizontalAlignment="Left" Margin="26,31,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.211,0.462"/>
+        <Label Content="Text:" HorizontalAlignment="Left" Margin="41,71,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtText" HorizontalAlignment="Left" Height="23" Margin="99,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="584"/>
+        <Button x:Name="btnEdit" Content="Edit" HorizontalAlignment="Left" Margin="509,115,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="608,115,0,0" VerticalAlignment="Top" Width="75"/>
+
     </Grid>
 </Window>

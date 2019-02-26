@@ -223,6 +223,12 @@ namespace BJL.SurveyMaker.BL
                             answer.Id = qa.AnswerId;
                             answer.LoadById();
 
+                            //Set the correct value
+                            if (qa.IsCorrect)
+                            {
+                                answer.IsCorrect = true;
+                            }
+                            
                             Answers.Add(answer);
                         }
 

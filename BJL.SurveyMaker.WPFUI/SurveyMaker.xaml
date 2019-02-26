@@ -5,8 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BJL.SurveyMaker.WPFUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Survey Maker" Height="408.981" Width="917.024">
     <Grid>
-        
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFF3A05A" Offset="0"/>
+                <GradientStop Color="#FFFFB77B" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <ComboBox x:Name="cboQuestion" HorizontalAlignment="Left" Margin="116,51,0,0" VerticalAlignment="Top" Width="589" SelectionChanged="QuestionSelected"/>
+        <Label Content="Question:" HorizontalAlignment="Left" Margin="44,48,0,0" VerticalAlignment="Top"/>
+        <ComboBox HorizontalAlignment="Left" Margin="116,92,0,0" VerticalAlignment="Top" Width="589"/>
+        <Label Content="Correct Answer:" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.107,0.55"/>
+        <ComboBox x:Name="cboWrongAnswer1" HorizontalAlignment="Left" Margin="116,135,0,0" VerticalAlignment="Top" Width="589"/>
+        <Label Content="Wrong Answer:" HorizontalAlignment="Left" Margin="13,131,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.107,0.55"/>
+        <ComboBox x:Name="cboCorrectAnswer" HorizontalAlignment="Left" Margin="116,92,0,0" VerticalAlignment="Top" Width="589"/>
+        <Label Content="Correct Answer:" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.107,0.55"/>
+        <ComboBox x:Name="cboWrongAnswer2" HorizontalAlignment="Left" Margin="117,180,0,0" VerticalAlignment="Top" Width="589"/>
+        <Label Content="Wrong Answer:" HorizontalAlignment="Left" Margin="14,176,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.107,0.55"/>
+        <ComboBox x:Name="cboWrongAnswer3" HorizontalAlignment="Left" Margin="117,222,0,0" VerticalAlignment="Top" Width="589"/>
+        <Label Content="Wrong Answer:" HorizontalAlignment="Left" Margin="14,218,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.107,0.55"/>
+        <Button Content="Save Answers to Question" HorizontalAlignment="Left" Height="46" Margin="117,265,0,0" VerticalAlignment="Top" Width="153"/>
+        <Button HorizontalAlignment="Left" Height="46" Margin="311,265,0,0" VerticalAlignment="Top" Width="206" Content="Remove Answers from Question"/>
+        <Button Content="Button" HorizontalAlignment="Left" Height="46" Margin="552,265,0,0" VerticalAlignment="Top" Width="153"/>
+        <Button Content="Manage Questions" HorizontalAlignment="Left" Height="46" VerticalAlignment="Top" Width="153" Margin="734,51,0,0" Click="BtnManageQuestions_Click"/>
+        <Button Content="Manage Answers" HorizontalAlignment="Left" Height="46" VerticalAlignment="Top" Width="153" Margin="734,111,0,0" Click="BtnManageAnswers_Click"/>
+        <DockPanel HorizontalAlignment="Right" Height="31" LastChildFill="False" Margin="0,347,0,0" VerticalAlignment="Top" Width="909" Background="#FFE4E4E4">
+            <Label x:Name="lblStatus" Content="" Height="31" VerticalAlignment="Top"/>
+        </DockPanel>
     </Grid>
 </Window>

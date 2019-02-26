@@ -126,6 +126,7 @@ namespace BJL.SurveyMaker.BL
                         {
                             this.Id = answer.Id;
                             this.Text = answer.Text;
+
                         }
                         else
                         {
