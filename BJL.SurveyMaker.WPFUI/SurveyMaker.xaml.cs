@@ -42,6 +42,9 @@ namespace BJL.SurveyMaker.WPFUI
 
         private void LoadComboBoxes()
         {
+            //Clear out status label
+            lblStatus.Content = String.Empty;
+
             //Load all questions and set to the combo boxes
             questions = new QuestionList();
             questions.LoadQuestions();
@@ -74,6 +77,8 @@ namespace BJL.SurveyMaker.WPFUI
             cboWrongAnswer3.ItemsSource = answers;
             cboWrongAnswer3.DisplayMemberPath = "Text";
             cboWrongAnswer3.SelectedValuePath = "Id";
+
+            cboQuestion.SelectedIndex = 0;
         }
 
         private void BtnManageAnswers_Click(object sender, RoutedEventArgs e)
@@ -94,44 +99,49 @@ namespace BJL.SurveyMaker.WPFUI
             {
                 //Question was picked, find its answers
                 Question question = new Question();
-                question = questions.ElementAt(cboQuestion.SelectedIndex);
 
-                //Clear out all selections
-                cboCorrectAnswer.SelectedItem = null;
-                cboWrongAnswer1.SelectedItem = null;
-                cboWrongAnswer2.SelectedItem = null;
-                cboWrongAnswer3.SelectedItem = null;
-
-                int wrongAnswersInserted = 0;
-
-                //Loop through each answer and select it in a combo box
-                foreach(Answer a in question.Answers)
+                if (cboQuestion.SelectedItem != null)
                 {
-                    if (a.IsCorrect)
-                    {
-                        cboCorrectAnswer.SelectedIndex = answers.FindIndex(ans => ans.Id == a.Id);
-                    }
-                    else
-                    {
-                        switch (wrongAnswersInserted)
-                        {
-                            case 0:
-                                cboWrongAnswer1.SelectedIndex = answers.FindIndex(ans => ans.Id == a.Id);
-                                break;
-                            case 1:
-                                cboWrongAnswer2.SelectedIndex = answers.FindIndex(ans => ans.Id == a.Id);
-                                break;
-                            case 2:
-                                cboWrongAnswer3.SelectedIndex = answers.FindIndex(ans => ans.Id == a.Id);
-                                break;
-                            default:
-                                break;
-                        }
 
-                        wrongAnswersInserted++;
+
+                    question = questions.ElementAt(cboQuestion.SelectedIndex);
+
+                    //Clear out all selections
+                    cboCorrectAnswer.SelectedItem = null;
+                    cboWrongAnswer1.SelectedItem = null;
+                    cboWrongAnswer2.SelectedItem = null;
+                    cboWrongAnswer3.SelectedItem = null;
+
+                    int wrongAnswersInserted = 0;
+
+                    //Loop through each answer and select it in a combo box
+                    foreach (Answer a in question.Answers)
+                    {
+                        if (a.IsCorrect)
+                        {
+                            cboCorrectAnswer.SelectedIndex = answers.FindIndex(ans => ans.Id == a.Id);
+                        }
+                        else
+                        {
+                            switch (wrongAnswersInserted)
+                            {
+                                case 0:
+                                    cboWrongAnswer1.SelectedIndex = answers.FindIndex(ans => ans.Id == a.Id);
+                                    break;
+                                case 1:
+                                    cboWrongAnswer2.SelectedIndex = answers.FindIndex(ans => ans.Id == a.Id);
+                                    break;
+                                case 2:
+                                    cboWrongAnswer3.SelectedIndex = answers.FindIndex(ans => ans.Id == a.Id);
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            wrongAnswersInserted++;
+                        }
                     }
                 }
-
             }
             catch (Exception ex)
             {

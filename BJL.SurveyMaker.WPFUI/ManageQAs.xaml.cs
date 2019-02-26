@@ -104,7 +104,7 @@ namespace BJL.SurveyMaker.WPFUI
             cboQorAs.DisplayMemberPath = "Text";
             cboQorAs.SelectedValuePath = "Id";
 
-            cboQorAs.SelectedItem = null;
+    
             //Update the edit button
             btnSave.Content = "Add " + qaMode.ToString();
             editMode = EditMode.Add;
