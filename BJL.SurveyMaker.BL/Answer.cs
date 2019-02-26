@@ -162,7 +162,7 @@ namespace BJL.SurveyMaker.BL
                 using (SurveyEntities dc = new SurveyEntities())
                 {
                     //Foreach answer in the database answer a new answer and add it to the answer list
-                    dc.tblAnswers.ToList().ForEach(a => this.Add(new Answer { Id = a.Id, Text = a.Text }));
+                    dc.tblAnswers.OrderBy(a => a.Text).ToList().ForEach(a => this.Add(new Answer { Id = a.Id, Text = a.Text }));
                 }
             }
             catch (Exception ex)

@@ -21,7 +21,7 @@ namespace BJL.SurveyMaker.WPFUI
         Answer = 0,
         Question = 1
     }
-    
+
 
 
     /// <summary>
@@ -89,11 +89,13 @@ namespace BJL.SurveyMaker.WPFUI
             switch (mode)
             {
                 case QAMode.Answer:
+
                     cboQorAs.ItemsSource = null;
                     cboQorAs.ItemsSource = answers;
                     break;
 
                 case QAMode.Question:
+
                     cboQorAs.ItemsSource = null;
                     cboQorAs.ItemsSource = questions;
                     break;
@@ -104,7 +106,7 @@ namespace BJL.SurveyMaker.WPFUI
             cboQorAs.DisplayMemberPath = "Text";
             cboQorAs.SelectedValuePath = "Id";
 
-    
+
             //Update the edit button
             btnSave.Content = "Add " + qaMode.ToString();
             editMode = EditMode.Add;
@@ -146,7 +148,7 @@ namespace BJL.SurveyMaker.WPFUI
             {
                 lblStatus.Content = ex.Message;
             }
-            
+
         }
 
 
@@ -163,13 +165,13 @@ namespace BJL.SurveyMaker.WPFUI
             try
             {
                 //Check if the cboBox is not selecting anything
-                if(cboQorAs.SelectedItem == null)
+                if (cboQorAs.SelectedItem == null)
                 {
                     throw new Exception("You must select a(n) " + qaMode.ToString() + " to delete");
                 }
                 else
                 {
-                    if(qaMode == QAMode.Answer)
+                    if (qaMode == QAMode.Answer)
                     {
                         //Delete the Answer
                         Answer answer = new Answer();
@@ -217,6 +219,137 @@ namespace BJL.SurveyMaker.WPFUI
                     }
                 }
 
+            }
+            catch (Exception ex)
+            {
+                lblStatus.Content = ex.Message;
+            }
+        }
+
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int result;
+
+                //Check whether adding a new question or updating a question
+                switch (editMode)
+                {
+                    /////////////////Editing a question/answer
+                    case EditMode.Update:
+                        //Check if question of answer
+                        if (txtText.Text != String.Empty)
+                        {
+                            switch (qaMode)
+                            {
+                                case QAMode.Answer:
+                                    Answer answer = answers.ElementAt(cboQorAs.SelectedIndex);
+                                    answer.Text = txtText.Text;
+                                    result = answer.Update();
+                                    if (result > 0)
+                                    {
+                                        lblStatus.Content = "Updated Answer: " + answer.Text;
+                                    }
+                                    else
+                                    {
+                                        throw new Exception("Answer not updated");
+                                    }
+
+
+                                    break;
+                                case QAMode.Question:
+                                    Question question = questions.ElementAt(cboQorAs.SelectedIndex);
+                                    question.Text = txtText.Text;
+                                    result = question.UpdateQuestion();
+                                    if (result > 0)
+                                    {
+                                        lblStatus.Content = "Updated Question: " + question.Text;
+                                    }
+                                    else
+                                    {
+                                        throw new Exception("Question not updated");
+                                    }
+
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        else {
+                            throw new Exception("Did you mean to delete this " + qaMode.ToString() + "? Please use the delete button instead.");
+                        }
+
+                        rebindComboBox(qaMode);
+                        break;
+
+
+
+
+
+
+
+                    ////////////////////////Adding a question/answer
+                    case EditMode.Add:
+                        //Check if question of answer
+                        if (txtText.Text != String.Empty)
+                        {
+                            switch (qaMode)
+                            {
+                                case QAMode.Answer:
+                                    //Create a new answer and put it in the database
+                                    Answer answer = new Answer();
+                                    answer.Text = txtText.Text;
+                                    answers.Add(answer);
+                                    result = answer.Insert();
+
+                                    //Update the label with success or failure message
+                                    if (result > 0)
+                                    {
+                                        lblStatus.Content = "Added Answer: " + answer.Text;
+                                    }
+                                    else
+                                    {
+                                        throw new Exception("Answer not inserted");
+                                    }
+
+
+                                    break;
+                                case QAMode.Question:
+                                    //Create question and add to the DB
+                                    Question question = new Question();
+                                    question.Text = txtText.Text;
+                                    questions.Add(question);
+                                    result = question.InsertQuestion();
+                                    //Show result on screen
+                                    if (result > 0)
+                                    {
+                                        lblStatus.Content = "Added Question: " + question.Text;
+                                    }
+                                    else
+                                    {
+                                        throw new Exception("Question not inserted");
+                                    }
+
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            //Clear the entered text
+                            txtText.Text = String.Empty;
+                        }
+                        else
+                        {
+                            throw new Exception("You must enter a value to add");
+                        }
+                        break;
+                    default:
+                        break;
+
+                }
+
+                //Rebind the combobox
+                rebindComboBox(qaMode);
             }
             catch (Exception ex)
             {

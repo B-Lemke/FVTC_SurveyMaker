@@ -270,12 +270,14 @@ namespace BJL.SurveyMaker.BL
                 using (SurveyEntities dc = new SurveyEntities())
                 {
                     //Foreach question in the database question q new question and add it to the question list
-                    dc.tblQuestions.ToList().ForEach(q => this.Add(new Question { Id = q.Id, Text = q.Text }));
+                    dc.tblQuestions.OrderBy(q=>q.Text).ToList().ForEach(q => this.Add(new Question { Id = q.Id, Text = q.Text }));
 
                     foreach(Question q in this)
                     {
                         q.LoadAnswers();
                     }
+
+
                 }
             }
             catch (Exception ex)
