@@ -69,7 +69,23 @@ namespace BJL.SurveyMaker.BL.Test
             Assert.IsTrue(actual > 0);
         }
 
+        [TestMethod]
+        public void LoadAnswers()
+        {
+            //Load all questions and then get the question
+            QuestionList questions = new QuestionList();
+            
+            //Load answers is executed in LoadQuestions, check that they are populated
+            questions.LoadQuestions();
+
+            Question question = questions.FirstOrDefault(q => q.Text == "Who sprouts mung beans in their desk drawers?");
+
+            int expected = 4;
+            int actual = question.Answers.Count;
+
+            Assert.AreEqual(expected, actual);
+
+        }
 
     }
-    
 }

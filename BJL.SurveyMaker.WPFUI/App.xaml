@@ -1,0 +1,9 @@
+﻿<Application x:Class="BJL.SurveyMaker.WPFUI.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:BJL.SurveyMaker.WPFUI"
+             StartupUri="SurveyMarker.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>

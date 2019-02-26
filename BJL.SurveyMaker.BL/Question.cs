@@ -126,6 +126,9 @@ namespace BJL.SurveyMaker.BL
                         {
                             this.Id = question.Id;
                             this.Text = question.Text;
+
+                            //Load the answers
+                            this.LoadAnswers();
                         }
                         else
                         {
@@ -144,6 +147,104 @@ namespace BJL.SurveyMaker.BL
             }
         }
 
+        
+
+        public int SaveAnswers()
+        {
+            //Delete all current questionanswers in the database for this question and save the current ones
+
+            try
+            {
+                using (SurveyEntities dc = new SurveyEntities())
+                {
+                    //If the Id is set, get the result in the table where it matches
+                    if (this.Id != Guid.Empty)
+                    {
+
+                        //get all of the questionanswers with this questionId
+                        var questionAnswers = dc.tblQuestionAnswers.Where(qa => qa.QuestionId == this.Id);
+
+                        //Delete the questionanswers with this questionId from the database
+                        foreach (tblQuestionAnswer qa in questionAnswers)
+                        {
+                            dc.tblQuestionAnswers.Remove(qa);
+                        }
+
+                        //Foreach question answer on the AnswerList, put it in QuestionAnswers with this question ID
+                        foreach (Answer a in Answers)
+                        {
+                            //set properties
+                            tblQuestionAnswer questionAnswer = new tblQuestionAnswer();
+                            questionAnswer.AnswerId = a.Id;
+                            questionAnswer.QuestionId = this.Id;
+                            questionAnswer.IsCorrect = a.IsCorrect;
+                            questionAnswer.Id = Guid.NewGuid();
+
+                            //add to the tblQuestionAnswers
+                            dc.tblQuestionAnswers.Add(questionAnswer);
+                        }
+
+                        //Return the number of rows affected
+                        return dc.SaveChanges();
+                    }
+                    else
+                    {
+                        throw new Exception("Id not set on Question");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        public int LoadAnswers()
+        {
+            //Load all of the current questionanswers from the database for this question
+            try
+            {
+                using (SurveyEntities dc = new SurveyEntities())
+                {
+                    //If the Id is set, get the result in the table where it matches
+                    if (this.Id != Guid.Empty)
+                    {
+                        //Instantiate the answer list
+                        Answers = new AnswerList();
+
+                        //get all of the questionanswers with this questionId
+                        var questionAnswers = dc.tblQuestionAnswers.Where(qa => qa.QuestionId == this.Id);
+
+                        //Foreach question answer, get the answer and put it in Answers
+                        foreach (tblQuestionAnswer qa in questionAnswers)
+                        {
+                            Answer answer = new Answer();
+                            answer.Id = qa.AnswerId;
+                            answer.LoadById();
+
+                            Answers.Add(answer);
+                        }
+
+                        dc.SaveChanges();
+
+                        //Return the new length of the answers list
+                        return Answers.Count;
+                    }
+                    else
+                    {
+                        throw new Exception("Id not set on Question");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+        }
+
     }
 
     public class QuestionList : List<Question>
@@ -156,6 +257,11 @@ namespace BJL.SurveyMaker.BL
                 {
                     //Foreach question in the database question q new question and add it to the question list
                     dc.tblQuestions.ToList().ForEach(q => this.Add(new Question { Id = q.Id, Text = q.Text }));
+
+                    foreach(Question q in this)
+                    {
+                        q.LoadAnswers();
+                    }
                 }
             }
             catch (Exception ex)
@@ -164,4 +270,6 @@ namespace BJL.SurveyMaker.BL
             }
         }
     }
+
+    
 }
