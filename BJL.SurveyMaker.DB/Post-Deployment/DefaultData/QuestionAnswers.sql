@@ -2,11 +2,13 @@
 	DECLARE @Question1Id uniqueidentifier
 	DECLARE @Question2Id uniqueidentifier
 	DECLARE @Question3Id uniqueidentifier
-
+	
+	
 	SELECT @Question1Id = Id FROM tblQuestion WHERE [Text] = 'Which character is theorized by many fans to be the Scranton Strangler?';
 	SELECT @Question2Id = Id FROM tblQuestion WHERE [Text] = 'Who sprouts mung beans in their desk drawers?';
 	SELECT @Question3Id = Id FROM tblQuestion WHERE [Text] = 'Which character left Dunder Mifflin the the fifth season to start a rival company under their own name?';
 
+	
 	DECLARE @Answer1Id uniqueidentifier
 	DECLARE @Answer2Id uniqueidentifier
 	DECLARE @Answer3Id uniqueidentifier

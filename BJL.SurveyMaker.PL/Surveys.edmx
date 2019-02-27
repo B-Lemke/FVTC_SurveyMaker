@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="lemkedbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="lemkedbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tblAnswer">
           <Key>
             <PropertyRef Name="Id" />
@@ -28,13 +28,18 @@
           <Property Name="AnswerId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="IsCorrect" Type="bit" Nullable="false" />
         </EntityType>
+        <Function Name="spDeleteQAWithAnswer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AnswerId" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="spDeleteQAWithQuestion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="QuestionId" Type="uniqueidentifier" Mode="In" />
+        </Function>
         <EntityContainer Name="lemkedbModelStoreContainer">
           <EntitySet Name="tblAnswer" EntityType="Self.tblAnswer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblQuestion" EntityType="Self.tblQuestion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblQuestionAnswer" EntityType="Self.tblQuestionAnswer" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="lemkedbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -65,6 +70,12 @@
           <EntitySet Name="tblAnswers" EntityType="Self.tblAnswer" />
           <EntitySet Name="tblQuestions" EntityType="Self.tblQuestion" />
           <EntitySet Name="tblQuestionAnswers" EntityType="Self.tblQuestionAnswer" />
+          <FunctionImport Name="spDeleteQAWithAnswer">
+            <Parameter Name="AnswerId" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="spDeleteQAWithQuestion">
+            <Parameter Name="QuestionId" Mode="In" Type="Guid" />
+          </FunctionImport>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -98,6 +109,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spDeleteQAWithAnswer" FunctionName="lemkedbModel.Store.spDeleteQAWithAnswer" />
+          <FunctionImportMapping FunctionImportName="spDeleteQAWithQuestion" FunctionName="lemkedbModel.Store.spDeleteQAWithQuestion" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

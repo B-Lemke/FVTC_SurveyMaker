@@ -76,6 +76,9 @@ namespace BJL.SurveyMaker.WPFUI
 
                 rebindComboBox(mode);
 
+                //Select the first item in the combobox
+                cboQorAs.SelectedIndex = 0;
+
             }
             catch (Exception ex)
             {

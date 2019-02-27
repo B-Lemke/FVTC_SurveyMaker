@@ -12,6 +12,8 @@ namespace BJL.SurveyMaker.PL
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class SurveyEntities : DbContext
     {
@@ -28,5 +30,23 @@ namespace BJL.SurveyMaker.PL
         public virtual DbSet<tblAnswer> tblAnswers { get; set; }
         public virtual DbSet<tblQuestion> tblQuestions { get; set; }
         public virtual DbSet<tblQuestionAnswer> tblQuestionAnswers { get; set; }
+    
+        public virtual int spDeleteQAWithAnswer(Nullable<System.Guid> answerId)
+        {
+            var answerIdParameter = answerId.HasValue ?
+                new ObjectParameter("AnswerId", answerId) :
+                new ObjectParameter("AnswerId", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDeleteQAWithAnswer", answerIdParameter);
+        }
+    
+        public virtual int spDeleteQAWithQuestion(Nullable<System.Guid> questionId)
+        {
+            var questionIdParameter = questionId.HasValue ?
+                new ObjectParameter("QuestionId", questionId) :
+                new ObjectParameter("QuestionId", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDeleteQAWithQuestion", questionIdParameter);
+        }
     }
 }

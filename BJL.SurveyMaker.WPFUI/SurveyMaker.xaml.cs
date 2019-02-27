@@ -158,7 +158,7 @@ namespace BJL.SurveyMaker.WPFUI
         {
             try
             {
-                //LoadComboBoxes();
+                LoadComboBoxes();
             }
             catch (Exception ex)
             {
@@ -231,7 +231,8 @@ namespace BJL.SurveyMaker.WPFUI
                 question.SaveAnswers();
 
                 //update the status label
-                lblStatus.Content = "Saved: Updated the answers on the question!.";
+                lblStatus.Content = "Saved: Updated the answers on the question!";
+                
 
 
             }

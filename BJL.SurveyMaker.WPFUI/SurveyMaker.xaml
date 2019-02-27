@@ -16,7 +16,7 @@
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="#FFDCC0A8" Offset="1"/>
-                <GradientStop Color="#FFFB9037"/>
+                <GradientStop Color="#FFF0730B"/>
             </LinearGradientBrush>
         </Grid.Background>
         <ComboBox x:Name="cboQuestion" HorizontalAlignment="Left" Margin="118,26,0,0" VerticalAlignment="Top" Width="589" SelectionChanged="QuestionSelected"/>

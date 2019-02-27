@@ -92,11 +92,15 @@ namespace BJL.SurveyMaker.BL
                             dc.tblAnswers.Remove(answer);
 
                             //Make sure to retrieve any rows from the questionAnswerstable with this answerID and delete them as well
-                            var questionAnswers = dc.tblQuestionAnswers.Where(qa => qa.AnswerId == this.Id);
+                            /*var questionAnswers = dc.tblQuestionAnswers.Where(qa => qa.AnswerId == this.Id);
                             foreach(tblQuestionAnswer qa in questionAnswers)
                             {
                                 dc.tblQuestionAnswers.Remove(qa);
                             }
+                            */
+
+                            //Use stored procedure to retrieve rows from the questionAnswers table with the answerId and delete them
+                            dc.spDeleteQAWithAnswer(answer.Id);
 
                             return dc.SaveChanges();
                         }

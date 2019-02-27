@@ -67,6 +67,8 @@
     <Build Include="Tables\tblQuestion.sql" />
     <Build Include="Tables\tblAnswer.sql" />
     <Build Include="Tables\tblQuestionAnswer.sql" />
+    <Build Include="StoredProcedures\spDeleteQAWithAnswer.sql" />
+    <Build Include="StoredProcedures\spDeleteQAWithQuestion.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BJL.SurveyMaker.DB.refactorlog" />
