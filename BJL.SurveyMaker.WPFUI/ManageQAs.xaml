@@ -9,8 +9,8 @@
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#FFF3A05A" Offset="0"/>
-                <GradientStop Color="#FFFFB77B" Offset="1"/>
+                <GradientStop Color="#FFDCC0A8" Offset="1"/>
+                <GradientStop Color="#FFFB9037"/>
             </LinearGradientBrush>
         </Grid.Background>
         <ComboBox x:Name="cboQorAs" HorizontalAlignment="Left" VerticalAlignment="Top" Width="584" Margin="99,35,0,0" SelectionChanged="cboQorAChanged"/>

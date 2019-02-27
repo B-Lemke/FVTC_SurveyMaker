@@ -29,6 +29,9 @@ namespace BJL.SurveyMaker.WPFUI
             try
             {
                 InitializeComponent();
+                questions = new QuestionList();
+                questions.LoadQuestions();
+
 
                 LoadComboBoxes();
             }
@@ -46,9 +49,6 @@ namespace BJL.SurveyMaker.WPFUI
             lblStatus.Content = String.Empty;
 
             //Load all questions and set to the combo boxes
-            questions = new QuestionList();
-            questions.LoadQuestions();
-
             cboQuestion.ItemsSource = null;
             cboQuestion.ItemsSource = questions;
             cboQuestion.DisplayMemberPath = "Text";
@@ -142,6 +142,11 @@ namespace BJL.SurveyMaker.WPFUI
                         }
                     }
                 }
+
+                //Clear out status label
+                lblStatus.Content = String.Empty;
+
+
             }
             catch (Exception ex)
             {
@@ -153,12 +158,184 @@ namespace BJL.SurveyMaker.WPFUI
         {
             try
             {
-                LoadComboBoxes();
+                //LoadComboBoxes();
             }
             catch (Exception ex)
             {
                 lblStatus.Content = ex.Message;
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                Question question = questions.ElementAt(cboQuestion.SelectedIndex);
+
+                //Clear out the current answers on the question
+                question.Answers.Clear();
+
+                //Save the currently selected answers to the question's answer list
+                if(cboCorrectAnswer.SelectedItem != null)
+                {
+                    //Check to make sure that duplicate answers aren't selected
+                    CheckSameSelection(cboCorrectAnswer, cboWrongAnswer1);
+                    CheckSameSelection(cboCorrectAnswer, cboWrongAnswer2);
+                    CheckSameSelection(cboCorrectAnswer, cboWrongAnswer3);
+
+                    //Find the answer in the master answer list and add a copy to this question's answer list
+                    Answer masterAnswer = answers.ElementAt(cboCorrectAnswer.SelectedIndex);
+                    Answer newAnswer = new Answer { Id = masterAnswer.Id, Text = masterAnswer.Text, IsCorrect = true };
+                    question.Answers.Add(newAnswer);
+
+                    newAnswer = null;
+                }
+                if (cboWrongAnswer1.SelectedItem != null)
+                {
+                    CheckSameSelection(cboWrongAnswer1, cboWrongAnswer2);
+                    CheckSameSelection(cboWrongAnswer1, cboWrongAnswer3);
+
+
+
+                    //Find the answer in the master answer list and add a copy to this question's answer list
+                    Answer masterAnswer = answers.ElementAt(cboWrongAnswer1.SelectedIndex);
+                    Answer newAnswer = new Answer { Id = masterAnswer.Id, Text = masterAnswer.Text, IsCorrect = false };
+                    question.Answers.Add(newAnswer);
+
+                    newAnswer = null;
+                }
+                if (cboWrongAnswer2.SelectedItem != null)
+                {
+                    CheckSameSelection(cboWrongAnswer2, cboWrongAnswer3);
+
+
+                    //Find the answer in the master answer list and add a copy to this question's answer list
+                    Answer masterAnswer = answers.ElementAt(cboWrongAnswer2.SelectedIndex);
+                    Answer newAnswer = new Answer { Id = masterAnswer.Id, Text = masterAnswer.Text, IsCorrect = false };
+                    question.Answers.Add(newAnswer);
+
+                    newAnswer = null;
+                }
+                if (cboWrongAnswer3.SelectedItem != null)
+                {
+
+                    //Find the answer in the master answer list and add a copy to this question's answer list
+                    Answer masterAnswer = answers.ElementAt(cboWrongAnswer3.SelectedIndex);
+                    Answer newAnswer = new Answer { Id = masterAnswer.Id, Text = masterAnswer.Text, IsCorrect = false };
+                    question.Answers.Add(newAnswer);
+
+                    newAnswer = null;
+                }
+                //Save the question answers to the database
+                question.SaveAnswers();
+
+                //update the status label
+                lblStatus.Content = "Saved: Updated the answers on the question!.";
+
+
+            }
+            catch (Exception ex)
+            {
+                lblStatus.Content = ex.Message;
+            }
+
+            
+        }
+
+        private void CheckSameSelection(ComboBox cbo1, ComboBox cbo2)
+        {
+            if (cbo1.SelectedItem == cbo2.SelectedItem)
+            {
+                string cbo1Display;
+                string cbo2Display;
+
+                switch (cbo1.Name)
+                {
+                    case "cboCorrectAnswer":
+                        cbo1Display = "The correct answer";
+                        break;
+                    case "cboWrongAnswer1":
+                        cbo1Display = "The first wrong answer";
+                        break;
+                    case "cboWrongAnswer2":
+                        cbo1Display = "The second wrong answer";
+                        break;
+                    default:
+                        cbo1Display = String.Empty;
+                        break;
+                }
+                switch (cbo2.Name)
+                {
+                    case "cboWrongAnswer1":
+                        cbo2Display = "the first wrong answer";
+                        break;
+                    case "cboWrongAnswer2":
+                        cbo2Display = "the second wrong answer";
+                        break;
+                    case "cboWrongAnswer3":
+                        cbo2Display = "the third wrong answer";
+                        break;
+                    default:
+                        cbo2Display = String.Empty;
+                        break;
+                }
+
+                throw new Exception("Error: " +cbo1Display + " and " + cbo2Display + " are the same.");
+            }
+        }
+
+        private void btnRemoveAnswersClicked(object sender, RoutedEventArgs e)
+        {
+            cboCorrectAnswer.SelectedItem = null;
+            cboWrongAnswer1.SelectedItem = null;
+            cboWrongAnswer2.SelectedItem = null;
+            cboWrongAnswer3.SelectedItem = null; 
+        }
+
+        private void cboCorrectAnswerChanged(object sender, SelectionChangedEventArgs e)
+        {
+            AnswerChanged();
+        }
+
+        private void AnswerChanged()
+        {
+            lblStatus.Content = "Unsaved Changes!";
+        }
+
+        private void cboWrongAnswer1Changed(object sender, SelectionChangedEventArgs e)
+        {
+            AnswerChanged();
+        }
+
+        private void cboWrongAnswer2Changed(object sender, SelectionChangedEventArgs e)
+        {
+            AnswerChanged();
+        }
+
+        private void cboWrongAnswer3Changed(object sender, SelectionChangedEventArgs e)
+        {
+            AnswerChanged();
+        }
+
+        private void BtnCorrectAnswerClear_Click(object sender, RoutedEventArgs e)
+        {
+            cboCorrectAnswer.SelectedItem = null;
+        }
+
+        private void BtnWrongAnswer1Clear_Click(object sender, RoutedEventArgs e)
+        {
+            cboWrongAnswer1.SelectedItem = null;
+        }
+
+        private void BtnWrongAnswer2Clear_Click(object sender, RoutedEventArgs e)
+        {
+            cboWrongAnswer2.SelectedItem = null;
+        }
+
+        private void BtnWrongAnswer3Clear_Click(object sender, RoutedEventArgs e)
+        {
+            cboWrongAnswer3.SelectedItem = null;
         }
     }
 }
