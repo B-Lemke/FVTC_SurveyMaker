@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="lemkedbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblActivation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="QuestionId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
+          <Property Name="ActivationCode" Type="varchar" MaxLength="5" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblAnswer">
           <Key>
             <PropertyRef Name="Id" />
@@ -28,6 +38,14 @@
           <Property Name="AnswerId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="IsCorrect" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblResponse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="QuestionId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AnswerId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
         <Function Name="spDeleteQAWithAnswer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="AnswerId" Type="uniqueidentifier" Mode="In" />
         </Function>
@@ -35,9 +53,11 @@
           <Parameter Name="QuestionId" Type="uniqueidentifier" Mode="In" />
         </Function>
         <EntityContainer Name="lemkedbModelStoreContainer">
+          <EntitySet Name="tblActivation" EntityType="Self.tblActivation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAnswer" EntityType="Self.tblAnswer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblQuestion" EntityType="Self.tblQuestion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblQuestionAnswer" EntityType="Self.tblQuestionAnswer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblResponse" EntityType="Self.tblResponse" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -71,12 +91,32 @@
           <EntitySet Name="tblQuestions" EntityType="Self.tblQuestion" />
           <EntitySet Name="tblQuestionAnswers" EntityType="Self.tblQuestionAnswer" />
           <FunctionImport Name="spDeleteQAWithAnswer">
-            <Parameter Name="AnswerId" Mode="In" Type="Guid" />
+          <Parameter Name="AnswerId" Mode="In" Type="Guid" />
           </FunctionImport>
           <FunctionImport Name="spDeleteQAWithQuestion">
-            <Parameter Name="QuestionId" Mode="In" Type="Guid" />
+          <Parameter Name="QuestionId" Mode="In" Type="Guid" />
           </FunctionImport>
+          <EntitySet Name="tblActivations" EntityType="lemkedbModel.tblActivation" />
+          <EntitySet Name="tblResponses" EntityType="lemkedbModel.tblResponse" />
         </EntityContainer>
+        <EntityType Name="tblActivation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="QuestionId" Type="Guid" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ActivationCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tblResponse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="QuestionId" Type="Guid" Nullable="false" />
+          <Property Name="AnswerId" Type="Guid" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -111,6 +151,26 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="spDeleteQAWithAnswer" FunctionName="lemkedbModel.Store.spDeleteQAWithAnswer" />
           <FunctionImportMapping FunctionImportName="spDeleteQAWithQuestion" FunctionName="lemkedbModel.Store.spDeleteQAWithQuestion" />
+          <EntitySetMapping Name="tblActivations">
+            <EntityTypeMapping TypeName="lemkedbModel.tblActivation">
+              <MappingFragment StoreEntitySet="tblActivation">
+                <ScalarProperty Name="ActivationCode" ColumnName="ActivationCode" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblResponses">
+            <EntityTypeMapping TypeName="lemkedbModel.tblResponse">
+              <MappingFragment StoreEntitySet="tblResponse">
+                <ScalarProperty Name="AnswerId" ColumnName="AnswerId" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

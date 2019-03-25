@@ -66,6 +66,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Surveys.edmx</DependentUpon>
     </Compile>
+    <Compile Include="tblActivation.cs">
+      <DependentUpon>Surveys.tt</DependentUpon>
+    </Compile>
     <Compile Include="tblAnswer.cs">
       <DependentUpon>Surveys.tt</DependentUpon>
     </Compile>
@@ -73,6 +76,9 @@
       <DependentUpon>Surveys.tt</DependentUpon>
     </Compile>
     <Compile Include="tblQuestionAnswer.cs">
+      <DependentUpon>Surveys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblResponse.cs">
       <DependentUpon>Surveys.tt</DependentUpon>
     </Compile>
   </ItemGroup>

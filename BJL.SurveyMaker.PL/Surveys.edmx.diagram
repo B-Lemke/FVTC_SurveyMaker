@@ -8,6 +8,8 @@
         <EntityTypeShape EntityType="lemkedbModel.tblAnswer" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="lemkedbModel.tblQuestion" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="lemkedbModel.tblQuestionAnswer" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="lemkedbModel.tblActivation" Width="1.5" PointX="3.375" PointY="3.75" />
+        <EntityTypeShape EntityType="lemkedbModel.tblResponse" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

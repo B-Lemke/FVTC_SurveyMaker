@@ -30,6 +30,8 @@ namespace BJL.SurveyMaker.PL
         public virtual DbSet<tblAnswer> tblAnswers { get; set; }
         public virtual DbSet<tblQuestion> tblQuestions { get; set; }
         public virtual DbSet<tblQuestionAnswer> tblQuestionAnswers { get; set; }
+        public virtual DbSet<tblActivation> tblActivations { get; set; }
+        public virtual DbSet<tblResponse> tblResponses { get; set; }
     
         public virtual int spDeleteQAWithAnswer(Nullable<System.Guid> answerId)
         {
