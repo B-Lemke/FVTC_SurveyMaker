@@ -69,6 +69,8 @@
     <Build Include="Tables\tblQuestionAnswer.sql" />
     <Build Include="StoredProcedures\spDeleteQAWithAnswer.sql" />
     <Build Include="StoredProcedures\spDeleteQAWithQuestion.sql" />
+    <Build Include="Tables\tblActivation.sql" />
+    <Build Include="Tables\tblResponse.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BJL.SurveyMaker.DB.refactorlog" />
@@ -81,6 +83,8 @@
     <None Include="Post-Deployment\DefaultData\Answers.sql" />
     <None Include="Post-Deployment\DefaultData\QuestionAnswers.sql" />
     <None Include="BJL.SurveyMaker.DB.publish.xml" />
+    <None Include="Post-Deployment\DefaultData\Activation.sql" />
+    <None Include="Post-Deployment\DefaultData\Response.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Post-Deployment\Script.PostDeployment1.sql" />

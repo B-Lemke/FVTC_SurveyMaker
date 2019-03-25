@@ -12,4 +12,6 @@
 
 DROP TABLE IF EXISTS [dbo].tblAnswer;
 DROP TABLE IF EXISTS [dbo].tblQuestion;
-DROP TABLE IF EXISTS [dbo].tblQuestionAnswer
+DROP TABLE IF EXISTS [dbo].tblQuestionAnswer;
+DROP TABLE IF EXISTS [dbo].tblActivation;
+DROP TABLE IF EXISTS [dbo].tblResponse;
