@@ -162,7 +162,49 @@ namespace BJL.SurveyMaker.BL
             }
         }
 
-        
+        public void LoadQuestionByActivationCode(string activationCode)
+        {
+            try
+            {
+                using (SurveyEntities dc = new SurveyEntities())
+                {
+                    //If the Id is set, get the result in the table where it matches
+
+                    var results = from q in dc.tblQuestions
+                                  join a in dc.tblActivations on q.Id equals a.QuestionId
+                                  where a.ActivationCode == activationCode
+                                  && a.StartDate < DateTime.Now
+                                  && a.EndDate > DateTime.Now
+                                  select new
+                                  {
+                                      q.Id,
+                                      q.Text
+                                  };
+
+                    //If q row was retrieved, change 
+                    if (results.Any())
+                    {
+
+                        this.Id = results.FirstOrDefault().Id;
+                        this.Text = results.FirstOrDefault().Text;
+
+                        //Load the answers
+                        this.LoadAnswers();
+                    }
+                    else
+                    {
+                        this.Id = Guid.Empty;
+                        this.Text = "Non-Valid Activation Code";
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public int SaveAnswers()
         {
@@ -243,7 +285,7 @@ namespace BJL.SurveyMaker.BL
                             {
                                 answer.IsCorrect = true;
                             }
-                            
+
                             Answers.Add(answer);
                         }
 
@@ -277,9 +319,9 @@ namespace BJL.SurveyMaker.BL
                 using (SurveyEntities dc = new SurveyEntities())
                 {
                     //Foreach question in the database question q new question and add it to the question list
-                    dc.tblQuestions.OrderBy(q=>q.Text).ToList().ForEach(q => this.Add(new Question { Id = q.Id, Text = q.Text }));
+                    dc.tblQuestions.OrderBy(q => q.Text).ToList().ForEach(q => this.Add(new Question { Id = q.Id, Text = q.Text }));
 
-                    foreach(Question q in this)
+                    foreach (Question q in this)
                     {
                         q.LoadAnswers();
                     }
@@ -294,5 +336,5 @@ namespace BJL.SurveyMaker.BL
         }
     }
 
-    
+
 }

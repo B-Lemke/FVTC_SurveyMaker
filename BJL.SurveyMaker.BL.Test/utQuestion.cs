@@ -87,5 +87,53 @@ namespace BJL.SurveyMaker.BL.Test
 
         }
 
+
+        [TestMethod]
+        public void LoadByActivationCodePass()
+        {
+            Question question = new Question();
+
+            question.LoadQuestionByActivationCode("test1");
+
+            Assert.AreEqual(question.Text, "Which character is theorized by many fans to be the Scranton Strangler?");
+        }
+
+
+        [TestMethod]
+        public void LoadByActivationCodeFailLate()
+        {
+            Question question = new Question();
+
+            //Activation code already passed
+            question.LoadQuestionByActivationCode("test2");
+
+            Assert.AreEqual(question.Text, "Non-Valid Activation Code");
+
+        }
+
+        [TestMethod]
+        public void LoadByActivationCodeFailEarly()
+        {
+            Question question = new Question();
+
+            //Activation code already passed
+            question.LoadQuestionByActivationCode("test3");
+
+            Assert.AreEqual(question.Text, "Non-Valid Activation Code");
+
+        }
+
+
+        [TestMethod]
+        public void LoadByActivationCodeFailInvalid()
+        {
+            Question question = new Question();
+
+            //Activation code already passed
+            question.LoadQuestionByActivationCode("zzzzz");
+
+            Assert.AreEqual(question.Text, "Non-Valid Activation Code");
+
+        }
     }
 }
