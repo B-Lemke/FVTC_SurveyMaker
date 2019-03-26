@@ -13,6 +13,10 @@ namespace BJL.SurveyMaker.SL
     {
         protected void Application_Start()
         {
+           
+            //Return json
+            GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
+
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
