@@ -25,6 +25,8 @@ namespace BJL.SurveyMaker.BL
                     answer.Id = Guid.NewGuid();
                     answer.Text = this.Text;
 
+                    this.Id = answer.Id;
+
                     //Add answer to the table
                     dc.tblAnswers.Add(answer);
 
