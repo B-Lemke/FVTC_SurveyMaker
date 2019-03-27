@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BJL.SurveyMaker.SL", "BJL.S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BJL.SurveyMaker.SL.Test", "BJL.SurveyMaker.SL.Test\BJL.SurveyMaker.SL.Test.csproj", "{BCE5531F-06AB-45E1-9F7B-E9AF7940B6D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BJL.SurveyMaker.ActivatorUI", "BJL.SurveyMaker.ActivatorUI\BJL.SurveyMaker.ActivatorUI.csproj", "{9324E91C-F4B2-4CD3-8565-8AEF7CB73D5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{BCE5531F-06AB-45E1-9F7B-E9AF7940B6D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCE5531F-06AB-45E1-9F7B-E9AF7940B6D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCE5531F-06AB-45E1-9F7B-E9AF7940B6D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9324E91C-F4B2-4CD3-8565-8AEF7CB73D5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9324E91C-F4B2-4CD3-8565-8AEF7CB73D5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9324E91C-F4B2-4CD3-8565-8AEF7CB73D5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9324E91C-F4B2-4CD3-8565-8AEF7CB73D5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
