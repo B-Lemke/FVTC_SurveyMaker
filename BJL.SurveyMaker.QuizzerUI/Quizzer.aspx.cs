@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BJL.SurveyMaker.BL;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Net.Http;
 
 namespace BJL.SurveyMaker.QuizzerUI
 {
@@ -18,9 +21,7 @@ namespace BJL.SurveyMaker.QuizzerUI
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            activations = new ActivationList();
-            activations.Load();
-            Session["activations"] = activations;
+            
         }
 
         protected void btnSubmitCode_Click(object sender, EventArgs e)
@@ -29,10 +30,11 @@ namespace BJL.SurveyMaker.QuizzerUI
             {
                 activations = new ActivationList();
                 activation = new Activation();
+                activations.Load();
 
-                //var match = activations.Any(a => a.Equals(txtCode.Text)) ? "Matched" : "Not Matched";
+                var match = activations.FirstOrDefault(a => a.ActivationCode == txtCode.Text);
 
-                if (txtCode.Text == activation.ActivationCode)
+                if (match != null)
                 {
                     lblQuestion.Visible = true;
                 }
@@ -51,5 +53,45 @@ namespace BJL.SurveyMaker.QuizzerUI
         {
 
         }
+
+        /*
+        private void LoadSL()
+        {
+            HttpClient client = InitializeClient();
+
+            string result;
+            dynamic items;
+            HttpResponseMessage response;
+
+            response = client.GetAsync("Activation").Result;
+
+            try
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    // Process the response
+                    result = response.Content.ReadAsStringAsync().Result;
+
+                    items = (JArray)JsonConvert.DeserializeObject(result);
+                    activations = items.ToObject<ActivationList>();                    
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
+            catch (Exception ex)
+            {
+                Response.Write("ERROR: " + ex.Message);
+            }
+        }
+
+        private static HttpClient InitializeClient()
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:51924/api/");
+            return client;
+        }
+        */
     }
 }
