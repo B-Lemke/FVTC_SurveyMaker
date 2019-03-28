@@ -70,5 +70,20 @@ namespace BJL.SurveyMaker.BL.Test
 
             Assert.IsTrue(rowsAffected == 1);
         }
+
+
+        [TestMethod]
+        public void LoadByQuestionId()
+        {
+            QuestionList questions = new QuestionList();
+            questions.LoadQuestions();
+            Question question = questions.FirstOrDefault(q => q.Text == "Who sprouts mung beans in their desk drawers?");
+
+            Activation activation = new Activation();
+            activation.LoadByQuestionId(question.Id);
+
+            Assert.AreEqual(activation.ActivationCode, "test2");
+        }
     }
 }
+

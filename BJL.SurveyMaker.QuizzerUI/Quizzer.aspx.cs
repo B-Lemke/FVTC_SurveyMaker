@@ -29,10 +29,10 @@ namespace BJL.SurveyMaker.QuizzerUI
             {
                 activations = new ActivationList();
                 activation = new Activation();
+                activations.Load();
+                var match = activations.FirstOrDefault(a => a.ActivationCode == txtCode.Text);
 
-                //var match = activations.Any(a => a.Equals(txtCode.Text)) ? "Matched" : "Not Matched";
-
-                if (txtCode.Text == activation.ActivationCode)
+                if (match != null)
                 {
                     lblQuestion.Visible = true;
                 }

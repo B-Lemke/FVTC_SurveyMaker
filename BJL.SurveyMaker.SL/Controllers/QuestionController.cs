@@ -26,6 +26,14 @@ namespace BJL.SurveyMaker.SL.Controllers
             return question;
         }
 
+        // GET: api/Question?code=test1
+        public Question GetQuestionByActivationCode(string code)
+        {
+            Question question = new Question();
+            question.LoadQuestionByActivationCode(code);
+            return question;
+        }
+
         // POST: api/Question
         public void Post([FromBody]Question question)
         {

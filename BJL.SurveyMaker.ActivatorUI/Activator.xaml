@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BJL.SurveyMaker.ActivatorUI"
         mc:Ignorable="d"
-        Title="Survey Activator" Height="318.908" Width="460.925">
+        Title="Survey Activator" Height="336.241" Width="755.925">
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -17,15 +17,19 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <DatePicker x:Name="dtpStartDate" HorizontalAlignment="Left" Margin="29,89,0,0" VerticalAlignment="Top" Width="275" Grid.Column="1"/>
-        <DatePicker x:Name="dtpEndDate" HorizontalAlignment="Left" Margin="29,137,0,0" VerticalAlignment="Top" Width="275" Grid.Column="1"/>
-        <TextBox x:Name="txtActivationCode" HorizontalAlignment="Left" Height="23" Margin="29,185,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="275" Grid.Column="1"/>
-        <ComboBox x:Name="cboQuestions" HorizontalAlignment="Left" Margin="29,42,0,0" VerticalAlignment="Top" Width="275" Grid.Column="1"/>
+        <DatePicker x:Name="dtpStartDate" HorizontalAlignment="Left" Margin="112,89,0,0" VerticalAlignment="Top" Width="610" Grid.ColumnSpan="2"/>
+        <DatePicker x:Name="dtpEndDate" HorizontalAlignment="Left" Margin="112,137,0,0" VerticalAlignment="Top" Width="610" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="txtActivationCode" HorizontalAlignment="Left" Height="23" Margin="112,185,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="610" Grid.ColumnSpan="2"/>
+        <ComboBox x:Name="cboQuestions" HorizontalAlignment="Left" Margin="112,42,0,0" VerticalAlignment="Top" Width="610" Grid.ColumnSpan="2" SelectionChanged="CboQuestions_SelectionChanged"/>
         <Label Content="Activation Code:" HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="83,228,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1"/>
-        <Button x:Name="btnDelete" Content="Remove Activation" HorizontalAlignment="Left" Margin="174,228,0,0" VerticalAlignment="Top" Width="130" Grid.Column="1"/>
+        <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="460,228,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1" Click="BtnSave_Click"/>
+        <Button x:Name="btnDelete" Content="Remove Activation" HorizontalAlignment="Left" Margin="314,228,0,0" VerticalAlignment="Top" Width="130" Grid.Column="1" Click="BtnDelete_Click"/>
         <Label Content="End Date:" HorizontalAlignment="Left" Margin="42,136,0,0" VerticalAlignment="Top"/>
         <Label Content="Start Date:" HorizontalAlignment="Left" Margin="38,88,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.084,0.463"/>
         <Label Content="Question:" HorizontalAlignment="Left" Margin="42,42,0,0" VerticalAlignment="Top"/>
+
+        <DockPanel HorizontalAlignment="Right" Height="31" LastChildFill="False" Margin="0,274,0,0" VerticalAlignment="Top" Width="748" Background="#FFE4E4E4" Grid.ColumnSpan="2">
+            <Label x:Name="lblStatus" Content="" Height="31" VerticalAlignment="Top"  Margin="10,0,0,0"/>
+        </DockPanel>
     </Grid>
 </Window>

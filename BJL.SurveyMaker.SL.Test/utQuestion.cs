@@ -25,7 +25,7 @@ namespace BJL.SurveyMaker.SL.Test
             //Proces response
             result = response.Content.ReadAsStringAsync().Result;
 
-            //Put json into the color list
+            //Put json into the question list
             items = (JArray)JsonConvert.DeserializeObject(result);
             QuestionList questions = new QuestionList();
             questions = items.ToObject<QuestionList>();
@@ -41,7 +41,7 @@ namespace BJL.SurveyMaker.SL.Test
             question.Text = "TestQuestion";
 
             HttpClient client = InitializeClient();
-            //Serialize a color object that we're trying to insert
+            //Serialize a question object that we're trying to insert
             string serializedQuestion = JsonConvert.SerializeObject(question);
             var content = new StringContent(serializedQuestion);
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
@@ -74,7 +74,7 @@ namespace BJL.SurveyMaker.SL.Test
 
 
             HttpClient client = InitializeClient();
-            //Serialize a color object that we're trying to insert
+            //Serialize a question object that we're trying to insert
             string serializedQuestion = JsonConvert.SerializeObject(question);
             var content = new StringContent(serializedQuestion);
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
@@ -98,7 +98,7 @@ namespace BJL.SurveyMaker.SL.Test
             question = questions.FirstOrDefault(q => q.Text == "UpdatedQuestion");
    
             HttpClient client = InitializeClient();
-            //Serialize a color object that we're trying to insert
+            //Serialize a question object that we're trying to insert
             HttpResponseMessage response = client.DeleteAsync("Question/" + question.Id).Result;
 
             Question newQuestion = new Question { Id = question.Id };

@@ -14,10 +14,7 @@ namespace BJL.SurveyMaker.BL
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string ActivationCode { get; set; }
-
-
-
-
+        
 
         public int Insert()
         {
@@ -162,6 +159,36 @@ namespace BJL.SurveyMaker.BL
             }
         }
 
+
+        public void LoadByQuestionId(Guid questionId)
+        {
+            try
+            {
+                using (SurveyEntities dc = new SurveyEntities())
+                {           
+                    tblActivation activation = dc.tblActivations.FirstOrDefault(a => a.QuestionId == questionId);
+
+                    //If a row was retrieved, change 
+                    if (activation != null)
+                    {
+                        this.Id = activation.Id;
+                        this.EndDate = activation.EndDate;
+                        this.StartDate = activation.StartDate;
+                        this.ActivationCode = activation.ActivationCode;
+                        this.QuestionId = activation.QuestionId;
+
+                    }
+                    else
+                    {
+                        throw new Exception("Could not find Activation row with this ID");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
 
     }
