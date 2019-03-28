@@ -63,7 +63,7 @@
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - FML</p>
+                <p>&copy; <%: DateTime.Now.Year %> - Survey Maker</p>
             </footer>
         </div>
 

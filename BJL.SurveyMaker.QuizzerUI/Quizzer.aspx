@@ -19,7 +19,7 @@
     <div class="form-row ml-2 mt-2">
         <div class="control-label col-md-8">
             <asp:Label ID="lblQuestion" runat="server" 
-                Text="Which character is theorized by many fans to be the Scranton Strangler?" 
+                Text="" 
                 Visible="false" 
                 Font-Size="Large">
             </asp:Label>

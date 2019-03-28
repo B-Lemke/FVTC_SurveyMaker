@@ -173,8 +173,8 @@ namespace BJL.SurveyMaker.BL
                     var results = from q in dc.tblQuestions
                                   join a in dc.tblActivations on q.Id equals a.QuestionId
                                   where a.ActivationCode == activationCode
-                                  && a.StartDate < DateTime.Now
-                                  && a.EndDate > DateTime.Now
+                                  //&& a.StartDate < DateTime.Now
+                                  //&& a.EndDate > DateTime.Now
                                   select new
                                   {
                                       q.Id,
