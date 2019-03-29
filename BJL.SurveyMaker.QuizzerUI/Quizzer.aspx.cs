@@ -20,6 +20,8 @@ namespace BJL.SurveyMaker.QuizzerUI
         AnswerList answers;
         Activation activation;
         ActivationList activations;
+        Response response;
+        ResponseList responses;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -67,6 +69,10 @@ namespace BJL.SurveyMaker.QuizzerUI
                 }
                 else
                 {
+                    lblQuestion.Visible = false;
+                    lblAnswer.Visible = false;
+                    ddlAnswers.Visible = false;
+                    btnSubmitAnswer.Visible = false;
                     throw new Exception("Please insert a valid code.");
                 }
             }
@@ -78,7 +84,25 @@ namespace BJL.SurveyMaker.QuizzerUI
 
         protected void btnSubmitAnswer_Click(object sender, EventArgs e)
         {
+            try
+            {
+                answer = question.Answers[ddlAnswers.SelectedIndex];
 
+                if (answer.IsCorrect)
+                {
+                    lblQuestion.Text = "Correct answer!";
+                    lblQuestion.ForeColor = System.Drawing.Color.Green;
+                }
+                else
+                {
+                    lblQuestion.Text = "Wrong answer.";
+                    lblQuestion.ForeColor = System.Drawing.Color.Red;
+                }
+            }
+            catch (Exception ex)
+            {
+                
+            }
         }
 
         private void Reload()
@@ -98,7 +122,7 @@ namespace BJL.SurveyMaker.QuizzerUI
             }
         }
 
-    
+        /*
         private void LoadActivations()
         {
             try
@@ -139,6 +163,7 @@ namespace BJL.SurveyMaker.QuizzerUI
             client.BaseAddress = new Uri("http://bjlsurveymaker.azurewebsites.net/api/");
             return client;
         }
+        */
         
     }
 }
