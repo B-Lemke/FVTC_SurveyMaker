@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net.Http;
 
+
 namespace BJL.SurveyMaker.QuizzerUI
 {
     public partial class Quizzer : System.Web.UI.Page
@@ -45,11 +46,8 @@ namespace BJL.SurveyMaker.QuizzerUI
                 activation = new Activation();
                 question = new Question();
                 question.Answers = new AnswerList();
-                answers = new AnswerList();
-                answer = new Answer();
 
                 activations.Load();
-                answers.Load();
 
                 var match = activations.FirstOrDefault(a => a.ActivationCode == txtCode.Text.ToLower());
 
@@ -69,7 +67,7 @@ namespace BJL.SurveyMaker.QuizzerUI
                 }
                 else
                 {
-                    throw new Exception("Please insert a correct code.");
+                    throw new Exception("Please insert a valid code.");
                 }
             }
             catch (Exception ex)
@@ -85,14 +83,22 @@ namespace BJL.SurveyMaker.QuizzerUI
 
         private void Reload()
         {
-            ddlAnswers.DataSource = null;
-            ddlAnswers.DataSource = answers;
-            ddlAnswers.DataTextField = "Text";
-            ddlAnswers.DataValueField = "Id";
-            ddlAnswers.DataBind();
+            if (question != null && question.Answers.Count > 0)
+            {
+                ddlAnswers.DataSource = null;
+                ddlAnswers.DataSource = question.Answers;
+                ddlAnswers.DataTextField = "Text";
+                ddlAnswers.DataValueField = "Id";
+                ddlAnswers.DataBind();
+            }
+            else
+            {
+                ddlAnswers.DataSource = null;
+                ddlAnswers.DataBind();
+            }
         }
 
-        /*
+    
         private void LoadActivations()
         {
             try
@@ -130,9 +136,9 @@ namespace BJL.SurveyMaker.QuizzerUI
         private static HttpClient InitializeClient()
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:51924/api/");
+            client.BaseAddress = new Uri("http://bjlsurveymaker.azurewebsites.net/api/");
             return client;
         }
-        */
+        
     }
 }
