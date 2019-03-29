@@ -84,12 +84,11 @@ namespace BJL.SurveyMaker.QuizzerUI
                     lblAnswer.Visible = false;
                     ddlAnswers.Visible = false;
                     btnSubmitAnswer.Visible = false;
-                    throw new Exception("Please insert a valid code.");
                 }
             }
             catch (Exception ex)
             {
-                Response.Write("ERROR: " + ex.Message);
+                lblQuestion.Text = ("ERROR: " + ex.Message);
             }
         }
 
