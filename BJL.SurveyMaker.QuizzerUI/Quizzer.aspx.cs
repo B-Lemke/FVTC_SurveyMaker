@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using BJL.SurveyMaker.SL;
 using BJL.SurveyMaker.BL;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -20,8 +21,6 @@ namespace BJL.SurveyMaker.QuizzerUI
         AnswerList answers;
         Activation activation;
         ActivationList activations;
-        Response response;
-        ResponseList responses;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -29,8 +28,8 @@ namespace BJL.SurveyMaker.QuizzerUI
             {
                 activations = new ActivationList();
                 answers = new AnswerList();
-                activations.Load();
-                answers.Load();
+                LoadActivations();
+                LoadAnswers();
                 Reload();
                 Session["activations"] = activations; 
             }
@@ -49,21 +48,31 @@ namespace BJL.SurveyMaker.QuizzerUI
                 question = new Question();
                 question.Answers = new AnswerList();
 
-                activations.Load();
+                LoadActivations();
 
                 var match = activations.FirstOrDefault(a => a.ActivationCode == txtCode.Text.ToLower());
 
                 if (match != null)
                 {
-                    question.LoadQuestionByActivationCode(txtCode.Text);
+                    HttpClient client = InitializeClient();
+                    HttpResponseMessage response = client.GetAsync("Question?code=" + txtCode.Text).Result;
+                    string result = response.Content.ReadAsStringAsync().Result;
+                    question = JsonConvert.DeserializeObject<Question>(result);
+
+                    //question.LoadQuestionByActivationCode(txtCode.Text);
+
                     lblQuestion.Text = question.Text;
 
                     Session["activations"] = activations;
-                    //Store question in the session
+
+                    // Store question in the session
                     Session["question"] = question;
+
                     Reload();
 
+                    lblQuestion.ForeColor = System.Drawing.Color.Black;
                     lblQuestion.Visible = true;
+                    txtCode.Text = string.Empty;
                     lblAnswer.Visible = true;
                     ddlAnswers.Visible = true;
                     btnSubmitAnswer.Visible = true;
@@ -71,6 +80,7 @@ namespace BJL.SurveyMaker.QuizzerUI
                 else
                 {
                     lblQuestion.Visible = false;
+                    txtCode.Text = string.Empty;
                     lblAnswer.Visible = false;
                     ddlAnswers.Visible = false;
                     btnSubmitAnswer.Visible = false;
@@ -87,7 +97,7 @@ namespace BJL.SurveyMaker.QuizzerUI
         {
             try
             {
-                //Pull the question out of the session
+                // Pull the question out of the session
                 question = (Question)Session["question"];
                 answer = question.Answers[ddlAnswers.SelectedIndex];
 
@@ -95,11 +105,18 @@ namespace BJL.SurveyMaker.QuizzerUI
                 {
                     lblQuestion.Text = "Correct answer!";
                     lblQuestion.ForeColor = System.Drawing.Color.Green;
+                    lblAnswer.Visible = false;
+                    ddlAnswers.Visible = false;
+                    btnSubmitAnswer.Visible = false;
+
                 }
                 else
                 {
                     lblQuestion.Text = "Wrong answer.";
                     lblQuestion.ForeColor = System.Drawing.Color.Red;
+                    lblAnswer.Visible = false;
+                    ddlAnswers.Visible = false;
+                    btnSubmitAnswer.Visible = false;
                 }
             }
             catch (Exception ex)
@@ -124,8 +141,7 @@ namespace BJL.SurveyMaker.QuizzerUI
                 ddlAnswers.DataBind();
             }
         }
-
-        /*
+        
         private void LoadActivations()
         {
             try
@@ -160,13 +176,81 @@ namespace BJL.SurveyMaker.QuizzerUI
             }
         }
 
+        private void LoadAnswers()
+        {
+            try
+            {
+                HttpClient client = InitializeClient();
+
+                string result;
+                dynamic items;
+                HttpResponseMessage response;
+
+                //Call the API
+                response = client.GetAsync("Answer").Result;
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    //Proces response
+                    result = response.Content.ReadAsStringAsync().Result;
+
+                    //Put json into the activation list
+                    items = (JArray)JsonConvert.DeserializeObject(result);
+                    answers = items.ToObject<AnswerList>();
+                }
+                else
+                {
+                    throw new Exception("Error: " + response.ReasonPhrase);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                lblQuestion.Text = ex.Message;
+            }
+        }
+
+        private void LoadQuestions()
+        {
+            try
+            {
+                HttpClient client = InitializeClient();
+
+                string result;
+                dynamic items;
+                HttpResponseMessage response;
+
+                //Call the API
+                response = client.GetAsync("Question").Result;
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    //Proces response
+                    result = response.Content.ReadAsStringAsync().Result;
+
+                    //Put json into the question list
+                    items = (JArray)JsonConvert.DeserializeObject(result);
+                    questions = items.ToObject<QuestionList>();
+                }
+                else
+                {
+                    throw new Exception("Error: " + response.ReasonPhrase);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                lblQuestion.Text = ex.Message;
+            }
+        }
+
         private static HttpClient InitializeClient()
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://bjlsurveymaker.azurewebsites.net/api/");
             return client;
         }
-        */
+        
         
     }
 }
