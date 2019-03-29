@@ -13,13 +13,22 @@ namespace BJL.SurveyMaker.QuizzerUI {
     public partial class Quizzer {
         
         /// <summary>
-        /// Label1 control.
+        /// lblErrorMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label lblErrorMsg;
+        
+        /// <summary>
+        /// lblActivationCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblActivationCode;
         
         /// <summary>
         /// txtCode control.

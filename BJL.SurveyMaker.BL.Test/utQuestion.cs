@@ -107,7 +107,7 @@ namespace BJL.SurveyMaker.BL.Test
             //Activation code already passed
             question.LoadQuestionByActivationCode("test2");
 
-            Assert.AreEqual(question.Text, "Non-Valid Activation Code");
+            Assert.AreEqual(question.Text, "Question no longer active");
 
         }
 
@@ -119,7 +119,7 @@ namespace BJL.SurveyMaker.BL.Test
             //Activation code already passed
             question.LoadQuestionByActivationCode("test3");
 
-            Assert.AreEqual(question.Text, "Non-Valid Activation Code");
+            Assert.AreEqual(question.Text, "Question not active yet");
 
         }
 

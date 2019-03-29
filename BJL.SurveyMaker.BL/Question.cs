@@ -173,23 +173,41 @@ namespace BJL.SurveyMaker.BL
                     var results = from q in dc.tblQuestions
                                   join a in dc.tblActivations on q.Id equals a.QuestionId
                                   where a.ActivationCode == activationCode
-                                  && a.StartDate < DateTime.Now
-                                  && a.EndDate > DateTime.Now
+                                  //&& a.StartDate < DateTime.Now
+                                  //&& a.EndDate > DateTime.Now
                                   select new
                                   {
                                       q.Id,
-                                      q.Text
+                                      q.Text,
+                                      a.StartDate,
+                                      a.EndDate
                                   };
 
                     //If q row was retrieved, change 
                     if (results.Any())
                     {
+                        if(results.FirstOrDefault().StartDate > DateTime.Now)
+                        {
+                            this.Id = Guid.Empty;
+                            this.Text = "Question not active yet";
+                        }
+                        else if(results.FirstOrDefault().EndDate < DateTime.Now)
+                        {
+                            this.Id = Guid.Empty;
+                            this.Text = "Question no longer active";
+                        } else
+                        {                                                        
+
+                        //Valid question, load it up
 
                         this.Id = results.FirstOrDefault().Id;
                         this.Text = results.FirstOrDefault().Text;
 
                         //Load the answers
                         this.LoadAnswers();
+                        }
+
+
                     }
                     else
                     {

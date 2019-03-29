@@ -1,10 +1,15 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Quizzer.aspx.cs" Inherits="BJL.SurveyMaker.QuizzerUI.Quizzer" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+       <div class="control-label col-md-6">
+            <asp:Label ID="lblErrorMsg" runat="server" Text=""></asp:Label>
+        </div>
+
 
     <div class="form-row ml-2 mt-3">
+
         <div class="control-label col-md-2">
-            <asp:Label ID="Label1" runat="server" Text="Activation Code: "></asp:Label>
+            <asp:Label ID="lblActivationCode" runat="server" Text="Activation Code: "></asp:Label>
         </div>
 
         <div class="control-label col-md-2">

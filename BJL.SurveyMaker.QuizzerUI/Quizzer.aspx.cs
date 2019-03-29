@@ -19,23 +19,23 @@ namespace BJL.SurveyMaker.QuizzerUI
         QuestionList questions;
         Answer answer;
         AnswerList answers;
-        Activation activation;
+        //Activation activation;
         ActivationList activations;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                activations = new ActivationList();
-                answers = new AnswerList();
-                LoadActivations();
-                LoadAnswers();
+                //activations = new ActivationList();
+                //answers = new AnswerList();
+                //LoadActivations();
+                //LoadAnswers();
                 Reload();
-                Session["activations"] = activations; 
+                //Session["activations"] = activations; 
             }
             else
             {
-                activations = (ActivationList)Session["activations"];
+                //activations = (ActivationList)Session["activations"];
             }
         }
 
@@ -43,34 +43,38 @@ namespace BJL.SurveyMaker.QuizzerUI
         {
             try
             {
-                activations = new ActivationList();
-                activation = new Activation();
+                //activations = new ActivationList();
+                //activation = new Activation();
                 question = new Question();
                 question.Answers = new AnswerList();
 
-                LoadActivations();
+                //LoadActivations();
 
-                var match = activations.FirstOrDefault(a => a.ActivationCode == txtCode.Text.ToLower());
+               // var match = activations.FirstOrDefault(a => a.ActivationCode == txtCode.Text.ToLower());
 
-                if (match != null)
+                
+                HttpClient client = InitializeClient();
+                HttpResponseMessage response = client.GetAsync("Question?code=" + txtCode.Text).Result;
+                string result = response.Content.ReadAsStringAsync().Result;
+                question = JsonConvert.DeserializeObject<Question>(result);
+
+                //question.LoadQuestionByActivationCode(txtCode.Text); replaced with SL
+                if (question.Id != Guid.Empty)
                 {
-                    HttpClient client = InitializeClient();
-                    HttpResponseMessage response = client.GetAsync("Question?code=" + txtCode.Text).Result;
-                    string result = response.Content.ReadAsStringAsync().Result;
-                    question = JsonConvert.DeserializeObject<Question>(result);
-
-                    //question.LoadQuestionByActivationCode(txtCode.Text);
-
                     lblQuestion.Text = question.Text;
 
-                    Session["activations"] = activations;
+                    //Session["activations"] = activations;
 
                     // Store question in the session
                     Session["question"] = question;
 
                     Reload();
 
+                    lblActivationCode.Visible = false;
+                    txtCode.Visible = false;
+                    btnSubmitCode.Visible = false;
                     lblQuestion.ForeColor = System.Drawing.Color.Black;
+                    lblErrorMsg.Visible = false;
                     lblQuestion.Visible = true;
                     txtCode.Text = string.Empty;
                     lblAnswer.Visible = true;
@@ -79,6 +83,8 @@ namespace BJL.SurveyMaker.QuizzerUI
                 }
                 else
                 {
+                    lblErrorMsg.Text = question.Text;
+                    lblErrorMsg.Visible = true;
                     lblQuestion.Visible = false;
                     txtCode.Text = string.Empty;
                     lblAnswer.Visible = false;
@@ -100,6 +106,20 @@ namespace BJL.SurveyMaker.QuizzerUI
                 question = (Question)Session["question"];
                 answer = question.Answers[ddlAnswers.SelectedIndex];
 
+                //Send response to DB using the SL
+                HttpClient client = InitializeClient();
+                Response response = new Response
+                {
+                    AnswerId = answer.Id,
+                    QuestionId = question.Id
+                };
+                string serializedResponse = JsonConvert.SerializeObject(response);
+                var responseContent = new StringContent(serializedResponse);
+                responseContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+                HttpResponseMessage httpresponse = client.PostAsync("Response/", responseContent).Result;
+
+                //Update the screen
                 if (answer.IsCorrect)
                 {
                     lblQuestion.Text = "Correct answer!";
@@ -107,7 +127,6 @@ namespace BJL.SurveyMaker.QuizzerUI
                     lblAnswer.Visible = false;
                     ddlAnswers.Visible = false;
                     btnSubmitAnswer.Visible = false;
-
                 }
                 else
                 {
@@ -117,10 +136,17 @@ namespace BJL.SurveyMaker.QuizzerUI
                     ddlAnswers.Visible = false;
                     btnSubmitAnswer.Visible = false;
                 }
+
+
+                //Show the activation code information again
+                lblActivationCode.Visible = true;
+                txtCode.Visible = true;
+                btnSubmitCode.Visible = true;
             }
             catch (Exception ex)
             {
-                
+                lblErrorMsg.Text = ("ERROR: " + ex.Message);
+                lblErrorMsg.Visible = true;
             }
         }
 
