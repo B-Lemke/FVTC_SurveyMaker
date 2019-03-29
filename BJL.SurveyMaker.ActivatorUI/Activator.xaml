@@ -31,5 +31,6 @@
         <DockPanel HorizontalAlignment="Right" Height="31" LastChildFill="False" Margin="0,274,0,0" VerticalAlignment="Top" Width="748" Background="#FFE4E4E4" Grid.ColumnSpan="2">
             <Label x:Name="lblStatus" Content="" Height="31" VerticalAlignment="Top"  Margin="10,0,0,0"/>
         </DockPanel>
+        <Button x:Name="btnGenerateActivationCode" Content="Random Activation Code" HorizontalAlignment="Left" Margin="144,228,0,0" VerticalAlignment="Top" Width="151" Grid.Column="1" Click="BtnGenerateActivationCode_Click"/>
     </Grid>
 </Window>

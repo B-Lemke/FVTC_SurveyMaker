@@ -271,5 +271,21 @@ namespace BJL.SurveyMaker.ActivatorUI
             }
 
         }
+
+        private void BtnGenerateActivationCode_Click(object sender, RoutedEventArgs e)
+        {
+            var chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+            var stringChars = new char[5];
+            var random = new Random();
+
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+
+            var finalString = new String(stringChars);
+            txtActivationCode.Text = finalString;
+
+        }
     }
 }
