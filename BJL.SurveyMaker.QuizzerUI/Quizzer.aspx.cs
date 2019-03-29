@@ -59,7 +59,8 @@ namespace BJL.SurveyMaker.QuizzerUI
                     lblQuestion.Text = question.Text;
 
                     Session["activations"] = activations;
-
+                    //Store question in the session
+                    Session["question"] = question;
                     Reload();
 
                     lblQuestion.Visible = true;
@@ -86,6 +87,8 @@ namespace BJL.SurveyMaker.QuizzerUI
         {
             try
             {
+                //Pull the question out of the session
+                question = (Question)Session["question"];
                 answer = question.Answers[ddlAnswers.SelectedIndex];
 
                 if (answer.IsCorrect)
